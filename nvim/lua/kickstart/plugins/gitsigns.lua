@@ -1,6 +1,19 @@
 return {
   'lewis6991/gitsigns.nvim',
+  init = function()
+    local group = vim.api.nvim_create_augroup('kickstart-gitsigns-blame-highlight', { clear = true })
+    vim.api.nvim_create_autocmd('ColorScheme', {
+      group = group,
+      callback = function()
+        vim.api.nvim_set_hl(0, 'GitSignsCurrentLineBlame', { link = 'Comment' })
+      end,
+    })
+    vim.api.nvim_set_hl(0, 'GitSignsCurrentLineBlame', { link = 'Comment' })
+  end,
   opts = {
+    current_line_blame = true,
+    current_line_blame_opts = { delay = 0 },
+    current_line_blame_formatter = '  <author>, <author_time:%R> - <summary>  ',
     on_attach = function(bufnr)
       local gitsigns = require 'gitsigns'
 
