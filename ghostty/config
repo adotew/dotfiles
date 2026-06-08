@@ -2,5 +2,5 @@ font-family = JetBrainsMono Nerd Font
 font-size = 12
 font-style = semibold
 background = 1a1a1a
-custom-shader = /Users/ado0810/.config/ghostty/shaders/cursor_trail.glsl
+custom-shader = ~/.config/ghostty/shaders/cursor_trail.glsl
 custom-shader-animation = true
