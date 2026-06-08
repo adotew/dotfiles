@@ -1,0 +1,10 @@
+*
+!.gitignore
+!nvim/
+!nvim/**
+!ghostty/
+!ghostty/**
+
+nvim/.git/
+nvim/.tmp/
+nvim/nvim.log
