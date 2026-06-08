@@ -5,7 +5,7 @@ return {
     lazy = false,
     keys = {
       { '<leader>dd', function() Snacks.dashboard() end, desc = 'Dashboard' },
-      { '<leader>gg', function() Snacks.lazygit() end, desc = 'LazyGit' }
+      { '<leader>gg', function() Snacks.lazygit() end, desc = 'LazyGit' },
     },
     opts = function()
       return {
@@ -40,15 +40,50 @@ return {
         },
         dashboard = {
           pane_gap = 12,
+          preset = {
+            header = [[                                                              
+                                                              
+                                                              
+                                                              
+                   +*+                   ++                   
+                 +*****                  +**+                 
+               +********                 +****+               
+             +***********+               +*******             
+           * **************              +********+           
+         *  * +*************             +***********         
+         *    + **************           +***********         
+         *     * **************          +***********         
+         *       + *************         +***********         
+         *        * *************+       +***********         
+         *         * +*************      +***********         
+         *          *  *************     +***********         
+         *          *   **************   +***********         
+         *          *    +*************  +***********         
+         *          *      *************+ ***********         
+         *          *       ************** **********         
+         *          *        +*************  ********         
+         *          *          *************+ +******         
+         *          *           ************** +*****         
+         *          *            +*************  ****         
+          *         *              ************** +*          
+            *       *               +*************            
+              *     *                 **********              
+                *   *                  *******                
+                  * *                   +**+                  
+                    *                                         
+                                                              
+                                                              
+                                                              
+                                                              
+]],
+          },
           sections = {
-            { section = 'keys', gap = 1, padding = 1 },
+            { section = 'header' },
             { section = 'startup' },
           },
         },
       }
     end,
-    config = function(_, opts)
-      require('snacks').setup(opts)
-    end,
+    config = function(_, opts) require('snacks').setup(opts) end,
   },
 }
