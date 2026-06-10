@@ -44,6 +44,12 @@ return {
         return parts
       end
 
+      local function branch(bufnr)
+        local head = vim.b[bufnr].gitsigns_head
+        if not head or head == '' then return nil end
+        return ' ' .. head
+      end
+
       local function mode_label()
         local mode = vim.api.nvim_get_mode().mode
         local labels = {
@@ -160,6 +166,8 @@ return {
           { text = mode_label(), hl = mode_highlight() },
           { text = filename(buf), hl = 'RightStatusMuted' },
         }
+        local git_branch = branch(buf)
+        if git_branch then table.insert(lines, { text = git_branch, hl = 'RightStatusMuted' }) end
 
         local diag_parts = diagnostics(buf)
         local diag_chunks = {}
@@ -198,9 +206,10 @@ return {
         local all_lines = {
           pad_left(lines[1].text, width),
           pad_left(lines[2].text, width),
-          pad_left(diag_text, width),
-          pad_left(meta_lines[1].text, width),
         }
+        if git_branch then table.insert(all_lines, pad_left(git_branch, width)) end
+        table.insert(all_lines, pad_left(diag_text, width))
+        table.insert(all_lines, pad_left(meta_lines[1].text, width))
 
         local float_buf = ensure_buf()
         vim.bo[float_buf].modifiable = true
@@ -237,16 +246,17 @@ return {
           vim.api.nvim_buf_add_highlight(float_buf, namespace, line.hl, line_index - 1, col, -1)
         end
 
+        local diag_row = #lines - 1
         local col = math.max(width - vim.fn.strdisplaywidth(diag_text), 0)
         for _, chunk in ipairs(diag_chunks) do
           local text, hl = chunk[1], chunk[2]
-          vim.api.nvim_buf_add_highlight(float_buf, namespace, hl, 2, col, col + #text)
+          vim.api.nvim_buf_add_highlight(float_buf, namespace, hl, diag_row, col, col + #text)
           col = col + #text
         end
 
         for idx, line in ipairs(meta_lines) do
           local col = math.max(width - vim.fn.strdisplaywidth(line.text), 0)
-          vim.api.nvim_buf_add_highlight(float_buf, namespace, line.hl, idx + 2, col, -1)
+          vim.api.nvim_buf_add_highlight(float_buf, namespace, line.hl, diag_row + idx, col, -1)
         end
       end
 
