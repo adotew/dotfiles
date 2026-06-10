@@ -6,17 +6,14 @@ return {
       'MunifTanjim/nui.nvim',
       'rcarriga/nvim-notify',
     },
-    keys = {
-      { '<leader>nd', '<cmd>NoiceDismiss<cr>', desc = 'Dismiss Noice' },
-    },
     opts = {
       cmdline = {
-        enabled = false,
-        view = 'cmdline',
+        enabled = true,
+        view = 'cmdline_popup',
       },
       messages = { enabled = false },
       popupmenu = {
-        enabled = false,
+        enabled = true,
         backend = 'nui',
       },
       notify = { enabled = false },
@@ -107,18 +104,30 @@ return {
             },
           },
         },
-        popupmenu = {
+        cmdline_popup = {
+          position = { row = '50%', col = '50%' },
+          size = {
+            min_width = 60,
+            width = 'auto',
+            height = 'auto',
+          },
+        },
+        cmdline_popupmenu = {
           relative = 'editor',
-          position = { row = 8, col = '50%' },
-          size = { width = 60, height = 10 },
+          position = { row = '58%', col = '50%' },
+          size = {
+            width = 60,
+            height = 'auto',
+            max_height = 15,
+          },
           border = {
             style = 'rounded',
             padding = { 0, 1 },
           },
           win_options = {
             winhighlight = {
-              Normal = 'NormalFloat',
-              FloatBorder = 'FloatBorder',
+              Normal = 'Normal',
+              FloatBorder = 'NoiceCmdlinePopupBorder',
             },
           },
         },
