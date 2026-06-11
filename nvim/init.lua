@@ -49,6 +49,7 @@ vim.o.scrolloff = 0
 
 vim.o.confirm = true
 
+
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 vim.keymap.set({ 'n', 'i', 's' }, '<C-f>', function()
@@ -113,6 +114,18 @@ local rtp = vim.opt.rtp
 rtp:prepend(lazypath)
 
 require('lazy').setup({
+  {
+    dir = vim.fn.expand '~/ghostty-theme-sync.nvim',
+    name = 'ghostty-theme-sync.nvim',
+    lazy = false,
+    priority = 1000,
+    config = function()
+      require('ghostty_theme_sync').setup {
+        auto_sync = true,
+        notify = false,
+      }
+    end,
+  },
   { 'NMAC427/guess-indent.nvim', opts = {} },
   {
     'lewis6991/gitsigns.nvim',
@@ -393,40 +406,6 @@ require('lazy').setup({
       fuzzy = { implementation = 'lua' },
       signature = { enabled = true },
     },
-  },
-  {
-    'catppuccin/nvim',
-    name = 'catppuccin',
-    priority = 1000,
-    config = function()
-      require('catppuccin').setup {
-        flavour = 'mocha',
-        transparent_background = true,
-        float = {
-          transparent = true,
-        },
-        styles = {
-          comments = {},
-        },
-        custom_highlights = function(c)
-          return {
-            WinBar = { bg = 'NONE' },
-            WinBarNC = { bg = 'NONE' },
-            NotifyBackground = { bg = c.base },
-            NoiceMiniNormal = { fg = c.blue, bold = true },
-            NoiceMiniInsert = { fg = c.green, bold = true },
-            NoiceMiniVisual = { fg = c.mauve, bold = true },
-            NoiceMiniReplace = { fg = c.yellow, bold = true },
-            NoiceMiniNormalBorder = { fg = c.blue },
-            NoiceMiniInsertBorder = { fg = c.green },
-            NoiceMiniVisualBorder = { fg = c.mauve },
-            NoiceMiniReplaceBorder = { fg = c.yellow },
-          }
-        end,
-      }
-
-      vim.cmd.colorscheme 'catppuccin'
-    end,
   },
   {
     'folke/todo-comments.nvim',

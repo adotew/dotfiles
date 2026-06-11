@@ -1,5 +1,5 @@
 font-size = 12
-background = 1a1a1a
+theme = nord wave
 
 cursor-style-blink = false
 custom-shader = shaders/cursor_sweep.glsl
