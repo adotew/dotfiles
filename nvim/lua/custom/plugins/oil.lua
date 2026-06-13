@@ -1,5 +1,8 @@
 return {
   'stevearc/oil.nvim',
+  keys = {
+    { '<leader>o', '<cmd>Oil<CR>', desc = 'Open [O]il' },
+  },
   opts = {
     confirmation = {
       border = 'rounded',
