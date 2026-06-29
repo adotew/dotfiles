@@ -115,7 +115,7 @@ rtp:prepend(lazypath)
 
 require('lazy').setup({
   {
-    dir = vim.fn.expand '~/ghostty-theme-sync.nvim',
+    dir = vim.fn.stdpath('config') .. '/../ghostty-theme-sync.nvim',
     name = 'ghostty-theme-sync.nvim',
     lazy = false,
     priority = 1000,
@@ -146,7 +146,7 @@ require('lazy').setup({
       delay = 0,
       icons = { mappings = vim.g.have_nerd_font },
       win = {
-        width = { min = 20, max = 0.35 },
+        width = 35,
         col = -1,
         row = -1,
       },
@@ -188,6 +188,26 @@ require('lazy').setup({
     },
     config = function()
       require('telescope').setup {
+        defaults = {
+          vimgrep_arguments = {
+            'rg',
+            '--color=never',
+            '--no-heading',
+            '--with-filename',
+            '--line-number',
+            '--column',
+            '--smart-case',
+            '--hidden',
+            '--glob',
+            '!.git/*',
+          },
+        },
+        pickers = {
+          find_files = {
+            hidden = true,
+            find_command = { 'rg', '--files', '--hidden', '--glob', '!.git/*' },
+          },
+        },
         extensions = {
           ['ui-select'] = { require('telescope.themes').get_dropdown() },
         },
@@ -439,15 +459,17 @@ require('lazy').setup({
     branch = 'main',
     config = function()
       local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
-      require('nvim-treesitter').install(parsers)
+
+      vim.api.nvim_create_user_command('TSInstallConfigured', function()
+        require('nvim-treesitter').install(parsers)
+      end, { desc = 'Install configured Treesitter parsers' })
 
       local function treesitter_try_attach(buf, language)
-        if not vim.treesitter.language.add(language) then return end
-        vim.treesitter.start(buf, language)
-        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+        local ok = pcall(vim.treesitter.start, buf, language)
+        if not ok then return end
+        vim.bo[buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
       end
 
-      local available_parsers = require('nvim-treesitter').get_available()
       vim.api.nvim_create_autocmd('FileType', {
         callback = function(args)
           local buf, filetype = args.buf, args.match
@@ -456,10 +478,6 @@ require('lazy').setup({
 
           local installed_parsers = require('nvim-treesitter').get_installed 'parsers'
           if vim.tbl_contains(installed_parsers, language) then
-            treesitter_try_attach(buf, language)
-          elseif vim.tbl_contains(available_parsers, language) then
-            require('nvim-treesitter').install(language):await(function() treesitter_try_attach(buf, language) end)
-          else
             treesitter_try_attach(buf, language)
           end
         end,

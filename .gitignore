@@ -4,6 +4,8 @@
 !nvim/**
 !ghostty/
 !ghostty/**
+!ghostty-theme-sync.nvim/
+!ghostty-theme-sync.nvim/**
 
 nvim/.git/
 nvim/.tmp/

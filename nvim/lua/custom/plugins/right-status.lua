@@ -246,7 +246,7 @@ return {
           vim.api.nvim_buf_add_highlight(float_buf, namespace, line.hl, line_index - 1, col, -1)
         end
 
-        local diag_row = #lines - 1
+        local diag_row = #lines
         local col = math.max(width - vim.fn.strdisplaywidth(diag_text), 0)
         for _, chunk in ipairs(diag_chunks) do
           local text, hl = chunk[1], chunk[2]

@@ -1,5 +1,5 @@
 font-size = 12
-theme = nord wave
+theme = tokyonight night
 
 cursor-style-blink = false
 custom-shader = shaders/cursor_sweep.glsl
