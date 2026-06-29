@@ -72,7 +72,7 @@ vim.diagnostic.config {
   jump = { float = true },
 }
 
-local autoread_augroup = vim.api.nvim_create_augroup('kickstart-autoread', { clear = true })
+local autoread_augroup = vim.api.nvim_create_augroup('config-autoread', { clear = true })
 
 vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter', 'CursorHold', 'CursorHoldI', 'TermClose' }, {
   group = autoread_augroup,
@@ -101,7 +101,7 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
-  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+  group = vim.api.nvim_create_augroup('config-highlight-yank', { clear = true }),
   callback = function() vim.hl.on_yank() end,
 })
 
@@ -128,127 +128,6 @@ require('lazy').setup({
   },
   { 'NMAC427/guess-indent.nvim', opts = {} },
   {
-    'folke/which-key.nvim',
-    event = 'VimEnter',
-    opts = {
-      delay = 0,
-      icons = { mappings = vim.g.have_nerd_font },
-      win = {
-        width = 35,
-        col = -1,
-        row = -1,
-      },
-      sort = { 'manual' },
-      spec = {
-        { '<leader>s', group = '[S]earch', mode = { 'n', 'v' }, icon = { icon = ' ', color = 'green' } },
-        { '<leader>f', desc = 'Find [F]iles' },
-        { '<leader>/', desc = '[/] Search by Grep' },
-        { '<leader>o', desc = 'Open [O]il', icon = { icon = '󰙅 ', color = 'blue' } },
-        { '<leader>g', group = '[G]it', icon = { icon = ' ', color = 'red' } },
-        { '<leader>t', group = '[T]oggle' },
-        { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
-        { '<leader>x', group = 'Diagnostics', icon = { icon = '󱖫 ', color = 'red' } },
-        { '<leader>q', group = 'Session', icon = { icon = ' ', color = 'grey' } },
-        { '<leader>w', group = '[W]indow' },
-        { '<leader>a', group = '[A]I' },
-        { '<leader>n', group = '[N]oice' },
-        { '<leader>p', group = '[P]arameter' },
-        { '<leader><leader>', hidden = true },
-        { '<leader>F', hidden = true },
-        { '<leader>dd', hidden = true },
-        { 'gr', group = 'LSP Actions', mode = { 'n' } },
-      },
-    },
-  },
-  {
-    'nvim-telescope/telescope.nvim',
-    enabled = true,
-    event = 'VimEnter',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        build = 'make',
-        cond = function() return vim.fn.executable 'make' == 1 end,
-      },
-      { 'nvim-telescope/telescope-ui-select.nvim' },
-      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
-    },
-    config = function()
-      require('telescope').setup {
-        defaults = {
-          vimgrep_arguments = {
-            'rg',
-            '--color=never',
-            '--no-heading',
-            '--with-filename',
-            '--line-number',
-            '--column',
-            '--smart-case',
-            '--hidden',
-            '--glob',
-            '!.git/*',
-          },
-        },
-        pickers = {
-          find_files = {
-            hidden = true,
-            find_command = { 'rg', '--files', '--hidden', '--glob', '!.git/*' },
-          },
-        },
-        extensions = {
-          ['ui-select'] = { require('telescope.themes').get_dropdown() },
-        },
-      }
-
-      pcall(require('telescope').load_extension, 'fzf')
-      pcall(require('telescope').load_extension, 'ui-select')
-
-      local builtin = require 'telescope.builtin'
-      vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
-      vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-      vim.keymap.set('n', '<leader>f', builtin.find_files, { desc = 'Find [F]iles' })
-      vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
-      vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
-      vim.keymap.set({ 'n', 'v' }, '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-      vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
-      vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
-      vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
-      vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
-      vim.keymap.set('n', '<leader>sc', builtin.commands, { desc = '[S]earch [C]ommands' })
-      vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
-
-      vim.api.nvim_create_autocmd('LspAttach', {
-        group = vim.api.nvim_create_augroup('telescope-lsp-attach', { clear = true }),
-        callback = function(event)
-          local buf = event.buf
-          vim.keymap.set('n', 'grr', builtin.lsp_references, { buffer = buf, desc = '[G]oto [R]eferences' })
-          vim.keymap.set('n', 'gri', builtin.lsp_implementations, { buffer = buf, desc = '[G]oto [I]mplementation' })
-          vim.keymap.set('n', 'grd', builtin.lsp_definitions, { buffer = buf, desc = '[G]oto [D]efinition' })
-          vim.keymap.set('n', 'gO', builtin.lsp_document_symbols, { buffer = buf, desc = 'Open Document Symbols' })
-          vim.keymap.set('n', 'gW', builtin.lsp_dynamic_workspace_symbols, { buffer = buf, desc = 'Open Workspace Symbols' })
-          vim.keymap.set('n', 'grt', builtin.lsp_type_definitions, { buffer = buf, desc = '[G]oto [T]ype Definition' })
-        end,
-      })
-
-      vim.keymap.set('n', '<leader>/', builtin.live_grep, { desc = '[/] Search by Grep' })
-
-      vim.keymap.set(
-        'n',
-        '<leader>s/',
-        function()
-          builtin.live_grep {
-            grep_open_files = true,
-            prompt_title = 'Live Grep in Open Files',
-          }
-        end,
-        { desc = '[S]earch [/] in Open Files' }
-      )
-
-      vim.keymap.set('n', '<leader>sn', function() builtin.find_files { cwd = vim.fn.stdpath 'config' } end, { desc = '[S]earch [N]eovim files' })
-    end,
-  },
-  {
     'neovim/nvim-lspconfig',
     dependencies = {
       {
@@ -261,7 +140,7 @@ require('lazy').setup({
     },
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {
-        group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
+        group = vim.api.nvim_create_augroup('config-lsp-attach', { clear = true }),
         callback = function(event)
           local map = function(keys, func, desc, mode)
             mode = mode or 'n'
@@ -275,7 +154,7 @@ require('lazy').setup({
 
           local client = vim.lsp.get_client_by_id(event.data.client_id)
           if client and client:supports_method('textDocument/documentHighlight', event.buf) then
-            local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
+            local highlight_augroup = vim.api.nvim_create_augroup('config-lsp-highlight', { clear = false })
             vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
               buffer = event.buf,
               group = highlight_augroup,
@@ -289,10 +168,10 @@ require('lazy').setup({
             })
 
             vim.api.nvim_create_autocmd('LspDetach', {
-              group = vim.api.nvim_create_augroup('kickstart-lsp-detach', { clear = true }),
+              group = vim.api.nvim_create_augroup('config-lsp-detach', { clear = true }),
               callback = function(event2)
                 vim.lsp.buf.clear_references()
-                vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = event2.buf }
+                vim.api.nvim_clear_autocmds { group = 'config-lsp-highlight', buffer = event2.buf }
               end,
             })
           end
@@ -492,11 +371,7 @@ require('lazy').setup({
       })
     end,
   },
-  require 'kickstart.plugins.indent_line',
-  require 'kickstart.plugins.lint',
-  require 'kickstart.plugins.autopairs',
-  require 'kickstart.plugins.gitsigns',
-  { import = 'custom.plugins' },
+  { import = 'plugins' },
 }, {
   ui = {
     icons = vim.g.have_nerd_font and {} or {

@@ -1,7 +1,7 @@
 return {
   'lewis6991/gitsigns.nvim',
   init = function()
-    local group = vim.api.nvim_create_augroup('kickstart-gitsigns-blame-highlight', { clear = true })
+    local group = vim.api.nvim_create_augroup('config-gitsigns-blame-highlight', { clear = true })
     vim.api.nvim_create_autocmd('ColorScheme', {
       group = group,
       callback = function()
