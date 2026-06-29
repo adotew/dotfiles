@@ -115,15 +115,13 @@ rtp:prepend(lazypath)
 
 require('lazy').setup({
   {
-    dir = vim.fn.stdpath('config') .. '/../ghostty-theme-sync.nvim',
-    name = 'ghostty-theme-sync.nvim',
+    'catppuccin/nvim',
+    name = 'catppuccin',
     lazy = false,
     priority = 1000,
+    opts = { flavour = 'mocha' },
     config = function()
-      require('ghostty_theme_sync').setup {
-        auto_sync = true,
-        notify = false,
-      }
+      vim.cmd.colorscheme 'catppuccin-mocha'
     end,
   },
   { 'NMAC427/guess-indent.nvim', opts = {} },
@@ -319,7 +317,7 @@ require('lazy').setup({
 
       local servers = {
         clangd = {},
-        pyright = {},
+        ruff = {},
         rust_analyzer = {},
         ts_ls = {},
         lua_ls = {
@@ -458,7 +456,7 @@ require('lazy').setup({
     build = ':TSUpdate',
     branch = 'main',
     config = function()
-      local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' }
+      local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'python', 'query', 'vim', 'vimdoc' }
 
       vim.api.nvim_create_user_command('TSInstallConfigured', function()
         require('nvim-treesitter').install(parsers)

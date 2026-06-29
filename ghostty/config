@@ -1,5 +1,5 @@
 font-size = 12
-theme = tokyonight night
+theme = Catppuccin Mocha
 
 cursor-style-blink = false
 custom-shader = shaders/cursor_sweep.glsl

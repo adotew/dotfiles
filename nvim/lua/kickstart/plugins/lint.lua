@@ -11,7 +11,6 @@ return {
       typescript = { 'eslint_d' },
       typescriptreact = { 'eslint_d' },
       javascript = { 'eslint_d' },
-      python = { 'ruff' },
     }
 
     local function stop_timer(bufnr)
