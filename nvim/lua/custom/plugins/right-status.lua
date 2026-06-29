@@ -274,7 +274,6 @@ return {
         'BufEnter',
         'WinEnter',
         'CursorMoved',
-        'CursorMovedI',
         'DiagnosticChanged',
         'ModeChanged',
         'BufWritePost',

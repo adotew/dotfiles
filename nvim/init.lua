@@ -16,7 +16,7 @@ vim.o.relativenumber = true
 
 vim.o.mouse = 'a'
 
-vim.o.showmode = true
+vim.o.showmode = false
 vim.o.cmdheight = 0
 
 vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
@@ -53,15 +53,17 @@ vim.o.confirm = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 vim.keymap.set({ 'n', 'i', 's' }, '<C-f>', function()
-  if not require('noice.lsp').scroll(4) then return '<C-f>' end
+  local ok, noice_lsp = pcall(require, 'noice.lsp')
+  if not ok or not noice_lsp.scroll(4) then return '<C-f>' end
 end, { silent = true, expr = true })
 
 vim.keymap.set({ 'n', 'i', 's' }, '<C-b>', function()
-  if not require('noice.lsp').scroll(-4) then return '<C-b>' end
+  local ok, noice_lsp = pcall(require, 'noice.lsp')
+  if not ok or not noice_lsp.scroll(-4) then return '<C-b>' end
 end, { silent = true, expr = true })
 
 vim.diagnostic.config {
-  update_in_insert = true,
+  update_in_insert = false,
   severity_sort = true,
   float = { border = 'rounded', source = 'if_many' },
   underline = { severity = { min = vim.diagnostic.severity.WARN } },
@@ -125,18 +127,6 @@ require('lazy').setup({
     end,
   },
   { 'NMAC427/guess-indent.nvim', opts = {} },
-  {
-    'lewis6991/gitsigns.nvim',
-    opts = {
-      signs = {
-        add = { text = '+' },
-        change = { text = '~' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
-      },
-    },
-  },
   {
     'folke/which-key.nvim',
     event = 'VimEnter',
@@ -456,7 +446,27 @@ require('lazy').setup({
     build = ':TSUpdate',
     branch = 'main',
     config = function()
-      local parsers = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'python', 'query', 'vim', 'vimdoc' }
+      local parsers = {
+        'bash',
+        'c',
+        'cpp',
+        'diff',
+        'html',
+        'javascript',
+        'json',
+        'lua',
+        'luadoc',
+        'markdown',
+        'markdown_inline',
+        'python',
+        'query',
+        'rust',
+        'tsx',
+        'typescript',
+        'vim',
+        'vimdoc',
+        'yaml',
+      }
 
       vim.api.nvim_create_user_command('TSInstallConfigured', function()
         require('nvim-treesitter').install(parsers)
