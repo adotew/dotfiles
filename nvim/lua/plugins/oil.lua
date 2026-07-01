@@ -1,7 +1,7 @@
 return {
   'stevearc/oil.nvim',
   keys = {
-    { '<leader>o', '<cmd>Oil<CR>', desc = 'Open [O]il' },
+    { '<leader>o', '<cmd>Oil<CR>', desc = '[O]pen [O]il' },
   },
   opts = {
     confirmation = {

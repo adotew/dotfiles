@@ -2,29 +2,22 @@ return {
   {
     'folke/noice.nvim',
     event = 'VeryLazy',
-    dependencies = {
-      'MunifTanjim/nui.nvim',
-      'rcarriga/nvim-notify',
-    },
+    dependencies = { 'MunifTanjim/nui.nvim' },
     opts = {
       cmdline = {
         enabled = true,
         view = 'cmdline_popup',
       },
-      messages = { enabled = false },
       popupmenu = {
         enabled = true,
         backend = 'nui',
       },
+      messages = { enabled = false },
       notify = { enabled = false },
       lsp = {
         progress = { enabled = false },
-        override = {
-          ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
-          ['vim.lsp.util.stylize_markdown'] = true,
-        },
-        hover = { enabled = true },
-        signature = { enabled = true },
+        hover = { enabled = false },
+        signature = { enabled = false },
         message = { enabled = false },
       },
       presets = {
@@ -32,84 +25,19 @@ return {
         command_palette = false,
         long_message_to_split = false,
         inc_rename = false,
-        lsp_doc_border = true,
+        lsp_doc_border = false,
       },
-      routes = {},
       views = {
-        mini_normal = {
-          backend = 'mini',
-          position = { row = '50%', col = '50%' },
-          size = 'auto',
-          timeout = 1000,
-          border = {
-            style = 'rounded',
-            padding = { 0, 1 },
-          },
-          win_options = {
-            winblend = 0,
-            winhighlight = {
-              Normal = 'NoiceMiniNormal',
-              FloatBorder = 'NoiceMiniNormalBorder',
-            },
-          },
-        },
-        mini_insert = {
-          backend = 'mini',
-          position = { row = '50%', col = '50%' },
-          size = 'auto',
-          timeout = 1000,
-          border = {
-            style = 'rounded',
-            padding = { 0, 1 },
-          },
-          win_options = {
-            winblend = 0,
-            winhighlight = {
-              Normal = 'NoiceMiniInsert',
-              FloatBorder = 'NoiceMiniInsertBorder',
-            },
-          },
-        },
-        mini_visual = {
-          backend = 'mini',
-          position = { row = '50%', col = '50%' },
-          size = 'auto',
-          timeout = 1000,
-          border = {
-            style = 'rounded',
-            padding = { 0, 1 },
-          },
-          win_options = {
-            winblend = 0,
-            winhighlight = {
-              Normal = 'NoiceMiniVisual',
-              FloatBorder = 'NoiceMiniVisualBorder',
-            },
-          },
-        },
-        mini_replace = {
-          backend = 'mini',
-          position = { row = '50%', col = '50%' },
-          size = 'auto',
-          timeout = 1000,
-          border = {
-            style = 'rounded',
-            padding = { 0, 1 },
-          },
-          win_options = {
-            winblend = 0,
-            winhighlight = {
-              Normal = 'NoiceMiniReplace',
-              FloatBorder = 'NoiceMiniReplaceBorder',
-            },
-          },
-        },
         cmdline_popup = {
           position = { row = '50%', col = '50%' },
           size = {
             min_width = 60,
             width = 'auto',
             height = 'auto',
+          },
+          border = {
+            style = 'rounded',
+            padding = { 0, 1 },
           },
         },
         cmdline_popupmenu = {
@@ -123,12 +51,6 @@ return {
           border = {
             style = 'rounded',
             padding = { 0, 1 },
-          },
-          win_options = {
-            winhighlight = {
-              Normal = 'Normal',
-              FloatBorder = 'NoiceCmdlinePopupBorder',
-            },
           },
         },
       },

@@ -11,27 +11,27 @@ return {
       return {
         { '<leader>sh', fzf 'helptags', desc = '[S]earch [H]elp' },
         { '<leader>sk', fzf 'keymaps', desc = '[S]earch [K]eymaps' },
-        { '<leader>f', fzf 'files', desc = 'Find [F]iles' },
+        { '<leader>f', fzf 'files', desc = '[F]ind [F]iles' },
         { '<leader>sf', fzf 'files', desc = '[S]earch [F]iles' },
-        { '<leader>ss', fzf 'builtin', desc = '[S]earch [S]elect FzfLua' },
-        { '<leader>sw', fzf 'grep_cword', desc = '[S]earch current [W]ord' },
-        { '<leader>sw', fzf 'grep_visual', mode = 'v', desc = '[S]earch selection' },
-        { '<leader>sg', fzf 'live_grep', desc = '[S]earch by [G]rep' },
+        { '<leader>ss', fzf 'builtin', desc = '[S]earch [S]elect Picker' },
+        { '<leader>sw', fzf 'grep_cword', desc = '[S]earch Current [W]ord' },
+        { '<leader>sw', fzf 'grep_visual', mode = 'v', desc = '[S]earch Selection' },
+        { '<leader>sg', fzf 'live_grep', desc = '[S]earch [G]rep' },
         { '<leader>sd', fzf 'diagnostics_workspace', desc = '[S]earch [D]iagnostics' },
         { '<leader>sr', fzf 'resume', desc = '[S]earch [R]esume' },
-        { '<leader>s.', fzf 'oldfiles', desc = '[S]earch Recent Files' },
+        { '<leader>s.', fzf 'oldfiles', desc = '[S]earch Old Files' },
         { '<leader>sc', fzf 'commands', desc = '[S]earch [C]ommands' },
-        { '<leader><leader>', fzf 'buffers', desc = '[ ] Find existing buffers' },
-        { '<leader>/', fzf 'live_grep', desc = '[/] Search by Grep' },
+        { '<leader><leader>', fzf 'buffers', desc = '[F]ind Buffers' },
+        { '<leader>/', fzf 'live_grep', desc = '[S]earch [G]rep' },
         {
           '<leader>s/',
           function() require('fzf-lua').live_grep { cwd = vim.fn.getcwd(), prompt = 'Open buffers> ' } end,
-          desc = '[S]earch [/] in Project',
+          desc = '[S]earch Project Grep',
         },
         {
           '<leader>sn',
           function() require('fzf-lua').files { cwd = vim.fn.stdpath 'config' } end,
-          desc = '[S]earch [N]eovim files',
+          desc = '[S]earch [N]eovim Files',
         },
       }
     end,
@@ -60,8 +60,8 @@ return {
           vim.keymap.set('n', 'grr', fzf.lsp_references, { buffer = buf, desc = '[G]oto [R]eferences' })
           vim.keymap.set('n', 'gri', fzf.lsp_implementations, { buffer = buf, desc = '[G]oto [I]mplementation' })
           vim.keymap.set('n', 'grd', fzf.lsp_definitions, { buffer = buf, desc = '[G]oto [D]efinition' })
-          vim.keymap.set('n', 'gO', fzf.lsp_document_symbols, { buffer = buf, desc = 'Open Document Symbols' })
-          vim.keymap.set('n', 'gW', fzf.lsp_workspace_symbols, { buffer = buf, desc = 'Open Workspace Symbols' })
+          vim.keymap.set('n', 'gO', fzf.lsp_document_symbols, { buffer = buf, desc = '[O]pen Document Symbols' })
+          vim.keymap.set('n', 'gW', fzf.lsp_workspace_symbols, { buffer = buf, desc = '[O]pen Workspace Symbols' })
           vim.keymap.set('n', 'grt', fzf.lsp_typedefs, { buffer = buf, desc = '[G]oto [T]ype Definition' })
         end,
       })

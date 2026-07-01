@@ -8,39 +8,39 @@ return {
         select = {
           lookahead = true,
           keymaps = {
-            ['af'] = { query = '@function.outer', desc = 'Around function' },
-            ['if'] = { query = '@function.inner', desc = 'Inside function' },
-            ['ac'] = { query = '@class.outer', desc = 'Around class' },
-            ['ic'] = { query = '@class.inner', desc = 'Inside class' },
-            ['aa'] = { query = '@parameter.outer', desc = 'Around argument' },
-            ['ia'] = { query = '@parameter.inner', desc = 'Inside argument' },
+            ['af'] = { query = '@function.outer', desc = 'Around Function' },
+            ['if'] = { query = '@function.inner', desc = 'Inside Function' },
+            ['ac'] = { query = '@class.outer', desc = 'Around Class' },
+            ['ic'] = { query = '@class.inner', desc = 'Inside Class' },
+            ['aa'] = { query = '@parameter.outer', desc = 'Around Argument' },
+            ['ia'] = { query = '@parameter.inner', desc = 'Inside Argument' },
           },
         },
         move = {
           set_jumps = true,
           goto_next_start = {
-            [']m'] = { query = '@function.outer', desc = 'Next function start' },
-            [']]'] = { query = '@class.outer', desc = 'Next class start' },
+            [']m'] = { query = '@function.outer', desc = 'Next Function Start' },
+            [']]'] = { query = '@class.outer', desc = 'Next Class Start' },
           },
           goto_next_end = {
-            [']M'] = { query = '@function.outer', desc = 'Next function end' },
-            [']['] = { query = '@class.outer', desc = 'Next class end' },
+            [']M'] = { query = '@function.outer', desc = 'Next Function End' },
+            [']['] = { query = '@class.outer', desc = 'Next Class End' },
           },
           goto_previous_start = {
-            ['[m'] = { query = '@function.outer', desc = 'Previous function start' },
-            ['[['] = { query = '@class.outer', desc = 'Previous class start' },
+            ['[m'] = { query = '@function.outer', desc = 'Previous Function Start' },
+            ['[['] = { query = '@class.outer', desc = 'Previous Class Start' },
           },
           goto_previous_end = {
-            ['[M'] = { query = '@function.outer', desc = 'Previous function end' },
-            ['[]'] = { query = '@class.outer', desc = 'Previous class end' },
+            ['[M'] = { query = '@function.outer', desc = 'Previous Function End' },
+            ['[]'] = { query = '@class.outer', desc = 'Previous Class End' },
           },
         },
         swap = {
           swap_next = {
-            ['<leader>pa'] = { query = '@parameter.inner', desc = 'Swap with next parameter' },
+            ['<leader>pa'] = { query = '@parameter.inner', desc = '[P]arameter Swap Next' },
           },
           swap_previous = {
-            ['<leader>pA'] = { query = '@parameter.inner', desc = 'Swap with previous parameter' },
+            ['<leader>pA'] = { query = '@parameter.inner', desc = '[P]arameter Swap Previous' },
           },
         },
       }

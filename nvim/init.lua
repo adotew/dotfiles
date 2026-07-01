@@ -50,17 +50,7 @@ vim.o.scrolloff = 0
 vim.o.confirm = true
 
 
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
-
-vim.keymap.set({ 'n', 'i', 's' }, '<C-f>', function()
-  local ok, noice_lsp = pcall(require, 'noice.lsp')
-  if not ok or not noice_lsp.scroll(4) then return '<C-f>' end
-end, { silent = true, expr = true })
-
-vim.keymap.set({ 'n', 'i', 's' }, '<C-b>', function()
-  local ok, noice_lsp = pcall(require, 'noice.lsp')
-  if not ok or not noice_lsp.scroll(-4) then return '<C-b>' end
-end, { silent = true, expr = true })
+vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>', { desc = 'Clear Search Highlight' })
 
 vim.diagnostic.config {
   update_in_insert = false,
@@ -90,14 +80,18 @@ vim.api.nvim_create_autocmd('FileChangedShellPost', {
   end,
 })
 
-vim.keymap.set('n', '<leader>xl', vim.diagnostic.setloclist, { desc = 'Open [L]ocation List Diagnostics' })
+vim.keymap.set('n', '<leader>xl', vim.diagnostic.setloclist, { desc = '[X] Diagnostics [L]ocation List' })
+vim.keymap.set('n', '<leader>td', function()
+  local enabled = vim.diagnostic.config().virtual_text ~= false
+  vim.diagnostic.config { virtual_text = not enabled }
+end, { desc = '[T]oggle [D]iagnostic Virtual Text' })
 
-vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit Terminal Mode' })
 
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Focus Left Window' })
+vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Focus Right Window' })
+vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Focus Lower Window' })
+vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Focus Upper Window' })
 
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
@@ -147,9 +141,9 @@ require('lazy').setup({
             vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
 
-          map('grn', vim.lsp.buf.rename, '[R]e[n]ame')
+          map('grn', vim.lsp.buf.rename, 'Re[n]ame')
           map('K', vim.lsp.buf.hover, 'Hover Documentation')
-          map('gra', vim.lsp.buf.code_action, '[G]oto Code [A]ction', { 'n', 'x' })
+          map('gra', vim.lsp.buf.code_action, '[C]ode [A]ction', { 'n', 'x' })
           map('grD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
           local client = vim.lsp.get_client_by_id(event.data.client_id)
@@ -244,7 +238,7 @@ require('lazy').setup({
         '<leader>F',
         function() require('conform').format { async = true, lsp_format = 'fallback' } end,
         mode = '',
-        desc = '[F]ormat buffer',
+        desc = '[F]ormat Buffer',
       },
     },
     opts = {
@@ -317,6 +311,7 @@ require('lazy').setup({
       require('mini.ai').setup { n_lines = 500 }
       require('mini.surround').setup()
       require('mini.comment').setup()
+      require('mini.pairs').setup()
     end,
   },
   {

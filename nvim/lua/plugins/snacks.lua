@@ -4,8 +4,8 @@ return {
     priority = 1000,
     lazy = false,
     keys = {
-      { '<leader>dd', function() Snacks.dashboard() end, desc = 'Dashboard' },
-      { '<leader>gg', function() Snacks.lazygit() end, desc = 'Lazygit' },
+      { '<leader>dd', function() Snacks.dashboard() end, desc = '[D]ashboard' },
+      { '<leader>gg', function() Snacks.lazygit() end, desc = '[G]it Lazy[G]it' },
     },
     opts = function()
       return {
