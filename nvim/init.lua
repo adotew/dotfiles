@@ -80,7 +80,6 @@ vim.api.nvim_create_autocmd('FileChangedShellPost', {
   end,
 })
 
-vim.keymap.set('n', '<leader>xl', vim.diagnostic.setloclist, { desc = '[X] Diagnostics [L]ocation List' })
 vim.keymap.set('n', '<leader>td', function()
   local enabled = vim.diagnostic.config().virtual_text ~= false
   vim.diagnostic.config { virtual_text = not enabled }
