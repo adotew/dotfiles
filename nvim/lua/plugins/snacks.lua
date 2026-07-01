@@ -5,6 +5,7 @@ return {
     lazy = false,
     keys = {
       { '<leader>dd', function() Snacks.dashboard() end, desc = 'Dashboard' },
+      { '<leader>gg', function() Snacks.lazygit() end, desc = 'Lazygit' },
     },
     opts = function()
       return {
