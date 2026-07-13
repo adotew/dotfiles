@@ -5,7 +5,11 @@ return {
     lazy = false,
     keys = {
       { '<leader>dd', function() Snacks.dashboard() end, desc = '[D]ashboard' },
-      { '<leader>gg', function() Snacks.lazygit() end, desc = '[G]it Lazy[G]it' },
+      {
+        '<leader>gg',
+        function() Snacks.terminal('gitui', { cwd = Snacks.git.get_root() }) end,
+        desc = '[G]it [G]UI',
+      },
     },
     opts = function()
       return {
