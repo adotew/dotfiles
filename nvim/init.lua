@@ -194,6 +194,7 @@ require('lazy').setup({
         basedpyright = {}, -- hover/types; ruff handles lint/format
         ruff = {},
         rust_analyzer = {},
+        svelte = {},
         ts_ls = {},
         lua_ls = {
           on_init = function(client)
@@ -279,6 +280,7 @@ require('lazy').setup({
         javascript = { 'prettierd', 'prettier', stop_after_first = true },
         rust = { 'rustfmt' },
         c = { 'clang-format' },
+        svelte = { 'prettierd', 'prettier', stop_after_first = true },
       },
     },
   },
@@ -352,6 +354,7 @@ require('lazy').setup({
         'python',
         'query',
         'rust',
+        'svelte',
         'tsx',
         'typescript',
         'vim',
