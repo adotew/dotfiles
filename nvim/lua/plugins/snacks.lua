@@ -4,89 +4,42 @@ return {
     priority = 1000,
     lazy = false,
     keys = {
-      { '<leader>dd', function() Snacks.dashboard() end, desc = '[D]ashboard' },
       {
         '<leader>gg',
-        function() Snacks.terminal('gitui', { cwd = Snacks.git.get_root() }) end,
-        desc = '[G]it [G]UI',
+        function() Snacks.terminal('lazygit', { cwd = Snacks.git.get_root() }) end,
+        desc = '[G]it lazy[G]it',
       },
     },
-    opts = function()
-      return {
-        scroll = {
-          enabled = true,
+    opts = {
+      dashboard = { enabled = false },
+      scroll = {
+        enabled = true,
+      },
+      image = {
+        enabled = true,
+        formats = {
+          'png',
+          'jpg',
+          'jpeg',
+          'gif',
+          'bmp',
+          'webp',
+          'tiff',
+          'heic',
+          'avif',
+          'mp4',
+          'mov',
+          'avi',
+          'mkv',
+          'webm',
+          'pdf',
+          'icns',
+          'svg',
         },
-        image = {
-          enabled = true,
-          formats = {
-            'png',
-            'jpg',
-            'jpeg',
-            'gif',
-            'bmp',
-            'webp',
-            'tiff',
-            'heic',
-            'avif',
-            'mp4',
-            'mov',
-            'avi',
-            'mkv',
-            'webm',
-            'pdf',
-            'icns',
-            'svg',
-          },
-          convert = {
-            notify = true,
-          },
+        convert = {
+          notify = true,
         },
-        dashboard = {
-          pane_gap = 12,
-          preset = {
-            header = [[                                                              
-                                                              
-                                                              
-                                                              
-                   +*+                   ++                   
-                 +*****                  +**+                 
-               +********                 +****+               
-             +***********+               +*******             
-           * **************              +********+           
-         *  * +*************             +***********         
-         *    + **************           +***********         
-         *     * **************          +***********         
-         *       + *************         +***********         
-         *        * *************+       +***********         
-         *         * +*************      +***********         
-         *          *  *************     +***********         
-         *          *   **************   +***********         
-         *          *    +*************  +***********         
-         *          *      *************+ ***********         
-         *          *       ************** **********         
-         *          *        +*************  ********         
-         *          *          *************+ +******         
-         *          *           ************** +*****         
-         *          *            +*************  ****         
-          *         *              ************** +*          
-            *       *               +*************            
-              *     *                 **********              
-                *   *                  *******                
-                  * *                   +**+                  
-                    *                                         
-                                                              
-                                                              
-                                                              
-                                                              
-]],
-          },
-          sections = {
-            { section = 'header' },
-            { section = 'startup' },
-          },
-        },
-      }
-    end,
-    config = function(_, opts) require('snacks').setup(opts) end,
+      },
+    },
   },
 }

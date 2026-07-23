@@ -18,6 +18,7 @@ vim.o.mouse = 'a'
 
 vim.o.showmode = false
 vim.o.cmdheight = 0
+vim.o.winborder = 'rounded'
 
 vim.schedule(function() vim.o.clipboard = 'unnamedplus' end)
 
@@ -98,6 +99,20 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function() vim.hl.on_yank() end,
 })
 
+vim.api.nvim_create_autocmd('BufReadPost', {
+  desc = 'Restore cursor to last position',
+  group = vim.api.nvim_create_augroup('config-last-loc', { clear = true }),
+  callback = function(event)
+    local buf = event.buf
+    if vim.bo[buf].filetype == 'gitcommit' or vim.b[buf].last_loc then return end
+    vim.b[buf].last_loc = true
+    local mark = vim.api.nvim_buf_get_mark(buf, '"')
+    if mark[1] > 0 and mark[1] <= vim.api.nvim_buf_line_count(buf) then
+      pcall(vim.api.nvim_win_set_cursor, 0, mark)
+    end
+  end,
+})
+
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
@@ -110,13 +125,11 @@ rtp:prepend(lazypath)
 
 require('lazy').setup({
   {
-    'catppuccin/nvim',
-    name = 'catppuccin',
+    'folke/tokyonight.nvim',
     lazy = false,
     priority = 1000,
-    opts = { flavour = 'mocha' },
     config = function()
-      vim.cmd.colorscheme 'catppuccin-mocha'
+      vim.cmd.colorscheme 'tokyonight-night'
     end,
   },
   { 'NMAC427/guess-indent.nvim', opts = {} },
@@ -127,7 +140,6 @@ require('lazy').setup({
         'mason-org/mason.nvim',
         opts = {},
       },
-      'mason-org/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       { 'j-hui/fidget.nvim', opts = {} },
     },
@@ -179,6 +191,7 @@ require('lazy').setup({
 
       local servers = {
         clangd = {},
+        basedpyright = {}, -- hover/types; ruff handles lint/format
         ruff = {},
         rust_analyzer = {},
         ts_ls = {},
@@ -209,18 +222,23 @@ require('lazy').setup({
         },
       }
 
-      local ensure_installed = vim.tbl_keys(servers or {})
-      vim.list_extend(ensure_installed, {
-        'stylua',
-        'prettierd',
-        'prettier',
-        'ruff',
-        'eslint_d',
-        'markdownlint',
-        'clang-format',
-      })
-
-      require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+      -- Mason package names (≠ lspconfig names for some servers)
+      require('mason-tool-installer').setup {
+        ensure_installed = {
+          'clangd',
+          'basedpyright',
+          'ruff',
+          'rust-analyzer',
+          'typescript-language-server',
+          'lua-language-server',
+          'stylua',
+          'prettierd',
+          'prettier',
+          'eslint_d',
+          'markdownlint',
+          'clang-format',
+        },
+      }
 
       for name, server in pairs(servers) do
         vim.lsp.config(name, server)
@@ -355,12 +373,17 @@ require('lazy').setup({
         callback = function(args)
           local buf, filetype = args.buf, args.match
           local language = vim.treesitter.language.get_lang(filetype)
-          if not language then return end
+          if not language or not vim.tbl_contains(parsers, language) then return end
 
-          local installed_parsers = require('nvim-treesitter').get_installed 'parsers'
-          if vim.tbl_contains(installed_parsers, language) then
+          local ts = require 'nvim-treesitter'
+          if vim.tbl_contains(ts.get_installed 'parsers', language) then
             treesitter_try_attach(buf, language)
+            return
           end
+
+          ts.install({ language }):await(function()
+            if vim.api.nvim_buf_is_valid(buf) then treesitter_try_attach(buf, language) end
+          end)
         end,
       })
     end,

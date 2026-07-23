@@ -2,7 +2,21 @@ return {
   {
     'ibhagwan/fzf-lua',
     cmd = 'FzfLua',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    dependencies = { 'nvim-mini/mini.icons' },
+    init = function()
+      vim.api.nvim_create_autocmd('VimEnter', {
+        group = vim.api.nvim_create_augroup('fzf-lua-startup', { clear = true }),
+        once = true,
+        callback = function()
+          if vim.fn.argc() ~= 0 then return end
+          local picker = vim.env.NVIM_FZF or 'files'
+          if picker == '' or picker == 'none' then return end
+          local fzf = require 'fzf-lua'
+          if type(fzf[picker]) ~= 'function' then return end
+          fzf[picker]()
+        end,
+      })
+    end,
     keys = function()
       local fzf = function(name, opts)
         return function() require('fzf-lua')[name](opts or {}) end
@@ -12,7 +26,6 @@ return {
         { '<leader>sh', fzf 'helptags', desc = '[S]earch [H]elp' },
         { '<leader>sk', fzf 'keymaps', desc = '[S]earch [K]eymaps' },
         { '<leader>f', fzf 'files', desc = '[F]ind [F]iles' },
-        { '<leader>sf', fzf 'files', desc = '[S]earch [F]iles' },
         { '<leader>ss', fzf 'builtin', desc = '[S]earch [S]elect Picker' },
         { '<leader>sw', fzf 'grep_cword', desc = '[S]earch Current [W]ord' },
         { '<leader>sw', fzf 'grep_visual', mode = 'v', desc = '[S]earch Selection' },

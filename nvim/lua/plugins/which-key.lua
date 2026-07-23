@@ -33,7 +33,6 @@ return {
       { '<leader>p', group = '[P]arameter' },
       { '<leader><leader>', desc = '[F]ind Buffers', hidden = true },
       { '<leader>F', desc = '[F]ormat Buffer', hidden = true },
-      { '<leader>dd', desc = '[D]ashboard', hidden = true },
       { 'gr', group = '[L]SP Actions', mode = { 'n' } },
     },
   },
