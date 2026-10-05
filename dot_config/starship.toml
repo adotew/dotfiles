@@ -1,0 +1,9 @@
+format = "$directory$git_branch"
+
+[directory]
+truncation_length = 1
+truncate_to_repo = false
+format = "[$path]($style) "
+
+[git_branch]
+format = "[$branch]($style) "
