@@ -1,0 +1,7 @@
+{{- $machine := promptChoiceOnce . "machine" "Machine" (list "personal" "work" "server") -}}
+{{- $email := promptStringOnce . "email" "Git email" -}}
+mode = "symlink"
+
+[data]
+  machine = {{ $machine | quote }}
+  email = {{ $email | quote }}

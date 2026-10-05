@@ -1,0 +1,14 @@
+
+Host github.com
+  HostName github.com
+  User git
+  AddKeysToAgent yes
+{{- if eq .chezmoi.os "darwin" }}
+  UseKeychain yes
+{{- end }}
+  IdentityFile ~/.ssh/id_ed25519
+
+Host optiplex
+  HostName 100.89.230.54
+  User adonai
+  SetEnv TERM=xterm-256color

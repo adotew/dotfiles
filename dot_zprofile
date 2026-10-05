@@ -1,0 +1,30 @@
+
+# Setting PATH for Python 3.12
+# The original version is saved in .zprofile.pysave
+PATH="/Library/Frameworks/Python.framework/Versions/3.12/bin:${PATH}"
+export PATH
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+##
+# Your previous /Users/ado0810/.zprofile file was backed up as /Users/ado0810/.zprofile.macports-saved_2024-10-17_at_10:12:07
+##
+
+# MacPorts Installer addition on 2024-10-17_at_10:12:07: adding an appropriate PATH variable for use with MacPorts.
+export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
+# Finished adapting your PATH environment variable for use with MacPorts.
+
+
+# Added by swiftly
+. "/Users/ado0810/.swiftly/env.sh"
+
+export PATH="/opt/homebrew/opt/zig@0.15/bin:$PATH"
+
+# MacPorts Installer addition on 2026-06-23_at_12:35:46: adding an appropriate PATH variable for use with MacPorts.
+export PATH="/opt/local/bin:/opt/local/sbin:$PATH"
+# Finished adapting your PATH environment variable for use with MacPorts.
+

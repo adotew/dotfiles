@@ -1,0 +1,15 @@
+README.md
+
+{{ if ne .chezmoi.os "darwin" }}
+.zprofile
+.zshenv
+.config/ghostty
+.config/zed
+.config/raycast
+{{ end }}
+
+{{ if eq .machine "server" }}
+.config/opencode
+.config/pi
+.config/ponytail
+{{ end }}

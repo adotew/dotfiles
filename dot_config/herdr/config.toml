@@ -1,0 +1,20 @@
+onboarding = false
+
+[theme]
+name = "terminal"
+
+auto_switch = false
+[theme.custom]
+accent = "#505050"
+overlay0 = "#303030"
+surface_dim = "#303030"
+
+[ui]
+pane_borders = "auto"
+pane_outer_borders = false
+pane_scrollbars = false
+pane_gaps = false
+hide_tab_bar_when_single_tab = true
+
+[ui.sound]
+enabled = false

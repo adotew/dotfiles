@@ -1,0 +1,11 @@
+font-size = 12
+theme = Tokyonight Night
+
+cursor-style-blink = false
+custom-shader = shaders/cursor_sweep.glsl
+custom-shader-animation = true
+
+macos-icon = custom-style
+macos-icon-frame = aluminum
+macos-icon-ghost-color = #0b00fd
+macos-icon-screen-color = #000000

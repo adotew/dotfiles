@@ -1,0 +1,20 @@
+{
+  "lastChangelogVersion": "1.0.2",
+  "quietStartup": true,
+  "enableInstallTelemetry": false,
+  "deviceId": "882c0370-35e0-49c4-8caa-376e92113291",
+  "defaultProvider": "openai",
+  "defaultModel": "gpt-6.1-sol",
+  "defaultThinkingLevel": "medium",
+  "enabledModels": [
+    "openai/gpt-6-luna",
+    "openai/gpt-6.1-sol",
+    "claude-bridge/claude-opus-5-5"
+  ],
+  "packages": [
+    "npm:pi-lens",
+    "npm:@dietrichgebert/ponytail",
+    "npm:pi-claude-bridge",
+    "npm:pi-web-access"
+  ]
+}
